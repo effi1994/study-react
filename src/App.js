@@ -1,69 +1,30 @@
-import React, { Component } from 'react'
-import './App.css';
-import Navbar from './components/navbar';
-import Counters from './components/counters'
+import React, { Component } from "react";
+import "./App.css";
+import { Route, Redirect, Switch } from "react-router-dom";
+import Movies from "./components/movies";
+import MovieFrom from './components/movieFrom';
+import Costomers from "./components/costomers";
+import Rentals from "./components/rentals";
+import NotFound from "./components/notFound";
+import NavBar from "./components/navbar";
 class App extends Component {
-  state = {
-    counters: [
-      { id: 1, value: 4 },
-      { id: 2, value: 0 },
-      { id: 3, value: 0 },
-      { id: 4, value: 0 },
-    ],
-  };
-
-  handleIncrement = (counter) => {
-       const counters =[...this.state.counters];
-       const index = counters.indexOf(counter);
-       counters[index].value++;
-       this.setState({counters});
-     };
-
-     handleDecrement = (counter) => {
-      const counters =[...this.state.counters];
-      const index = counters.indexOf(counter);
-      counters[index].value--;
-      this.setState({counters});
-    };
-
-  hanleReset = () => {
-    let counters = this.state.counters.filter((i) => {
-       i.value=0;
-       return i;
-    });
-    this.setState({
-      counters,
-    });
-  };
-
-  
-
-  handleDelete = (counterId) => {
-    let counters = this.state.counters.filter((i) => i.id !== counterId);
-    this.setState({
-      counters,
-    });
-  };
   render() {
     return (
       <React.Fragment>
-        <Navbar 
-        totalCounters={this.state.counters.filter(c=> c.value >0).length}/>
+        <NavBar />
         <main className="container">
-          <Counters 
-          counters={this.state.counters}
-          onReset={this.hanleReset}
-          onIncrement={this.handleIncrement}
-          onDelete={this.handleDelete}
-          onDecrement={this.handleDecrement}
-          />
+          <Switch>
+            <Route path={"/movies/:id"} component={MovieFrom}/>
+            <Route path="/movies" component={Movies} />
+            <Route path="/customers" component={Costomers} />
+            <Route path="/rentals" component={Rentals} />
+            <Route path="/not-found" component={NotFound} />
+            <Redirect from="/" exact to={"/movies"} />
+            <Redirect to={"/not-found"} />
+          </Switch>
         </main>
       </React.Fragment>
-
     );
   }
 }
 export default App;
-
-
-
