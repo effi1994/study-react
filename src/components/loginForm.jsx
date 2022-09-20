@@ -26,10 +26,15 @@ class LoginForm extends Form {
     return (
       <div>
         <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
+        <form className="row g-1" onSubmit={this.handleSubmit}>
+        <div className="col-md-4">
           {this.renderInput('username','Username/Email','text','username or email','')}
-          {this.renderInput('password','Password','password','','')}
+        </div>
+        <div className="col-md-4"> {this.renderInput('password','Password','password','','')}</div>
+         <div className="col-12">
           {this.renderButton('Login')} <Link to={'/register'}>Register</Link>
+         </div>
+          
         </form>
       </div>
     );
