@@ -26,7 +26,7 @@ class LoginForm extends Form {
     return (
       <div>
         <h1>Login</h1>
-        <form className="row g-1" onSubmit={this.handleSubmit}>
+        <form  onSubmit={this.handleSubmit}>
         <div className="col-md-4">
           {this.renderInput('username','Username/Email','text','username or email','')}
         </div>
@@ -34,7 +34,6 @@ class LoginForm extends Form {
          <div className="col-12">
           {this.renderButton('Login')} <Link to={'/register'}>Register</Link>
          </div>
-          
         </form>
       </div>
     );
