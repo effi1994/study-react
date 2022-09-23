@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import Joi from "joi-browser";
+import * as userService from '../services/userService'
 import Form from "./common/form";
 class Register extends Form {
   state = {
@@ -17,21 +18,39 @@ class Register extends Form {
     errors: {},
   };
 
+ 
+
   schema = {
     firstName: Joi.string().required().label("First name"),
     lastName: Joi.string().required().label("Last name"),
     username: Joi.string().required().label("Username"),
     password: Joi.string().min(5).required().label("Password"),
     email: Joi.string().email().required().label("Email"),
-    phoneNumber: Joi.string().required().label("Phone Number"),
+    phoneNumber: Joi.string().min(5).required().label("Phone Number"),
     city: Joi.string().required().label("City"),
     country: Joi.string().required().label("Country"),
     address: Joi.string().required().label("Address"),
   };
 
-  doSubmit = () => {
-    //Call the server
-    console.log("submitted");
+  doSubmit = async () => {
+    try{
+     const response=  await userService.register(this.state.data);
+     localStorage.setItem('token',response.headers['x-auth-token']);
+     window.location="/";
+    }catch(ex){
+       if(ex.response && ex.response.status === 400){
+        const errors ={...this.state.errors};
+        if(ex.response.data.includes("Email")){
+          errors.email=ex.response.data;
+        }else{
+          errors.username=ex.response.data;
+        }
+        console.log(ex.response)
+        this.setState({errors});
+       }
+    }
+    
+     
   };
 
   render() {
@@ -58,7 +77,7 @@ class Register extends Form {
             {this.renderInput(
               "phoneNumber",
               "Phone Number",
-              "number",
+              "text",
               "ex.055789545"
             )}
           </div>
