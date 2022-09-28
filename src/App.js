@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import jwtDecode from "jwt-decode";
@@ -7,10 +6,13 @@ import Movies from "./components/movies";
 import Costomers from "./components/costomers";
 import LoginForm from './components/loginForm'
 import Register from "./components/register";
+import Logout from './components/logout';
 import Rentals from "./components/rentals";
 import NotFound from "./components/notFound";
 import NavBar from "./components/navbar";
 import MovieAddEdit from './components/addEditMovie';
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 class App extends Component {
   state = {};
 
@@ -30,6 +32,7 @@ class App extends Component {
           <Switch>
             <Route path={"/register"} component={Register} />
             <Route path={"/login"} component={LoginForm} />
+            <Route path={"/logout"} component={Logout} />
             <Route path={"/movies/:id"} component={MovieAddEdit} />
             <Route path="/movies" component={Movies} />
             <Route path="/customers" component={Costomers} />
